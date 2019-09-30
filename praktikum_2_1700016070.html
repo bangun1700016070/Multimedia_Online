@@ -27,14 +27,16 @@
             document.body.addEventListener('keydown', enter);
             function enter(e)
             {
-                var code = e.keycode;
-                if (code ==13)
-                
+                var code = e.keyCode;
+                if (code == 13){                
                     ctx.lineWidth = 2;
                     ctx.strokeStyle = 'black';
                     ctx.fillStyle = 'green';
                     ctx.fill();
-                    ctx.stroke();                
+                    ctx.stroke();
+                } else {
+                    alert('Hanya bisa menggunakan tombol Enter');
+                }
             }
         </script>
     </body>
