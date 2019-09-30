@@ -35,7 +35,13 @@
                     ctx.fill();
                     ctx.stroke();
                 } else {
-                    alert('Hanya bisa menggunakan tombol Enter');
+                    ctx.beginPath();
+                    var x = e.offsetX;
+                    var y = e.offsetY;
+                    ctx.lineTo(x,y);
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = 'black';
+                    ctx.stroke();
                 }
             }
         </script>
