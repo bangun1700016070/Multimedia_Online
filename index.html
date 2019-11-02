@@ -1,18 +1,72 @@
-
+<!doctype html>
 <html>
-	<head>	
-		<title>Pra Praktikum | MULON</title>
-	</head>
-	<body>
-		<h1>Hasil Praktikum Multimedia Online</h1>
-		<p>Bangun Prakas Sujatmiko</p>
-		<p>1700016070</p>
-		<ul>
-			<li><a href="https://bangun1700016070.github.io/Multimedia_Online/praktikum_1_1700016070.html">Praktikum 1 - Canvas HTML</a></li>
-			<li><a href="https://bangun1700016070.github.io/Multimedia_Online/praktikum_2_1700016070.html">Praktikum 2 - Interaktivitas</a></li>
-			<li><a href="https://bangun1700016070.github.io/Multimedia_Online/praktikum_3_1700016070.html">Praktikum 3 - Vector Pattern</a></li>
-			<li><a href="https://bangun1700016070.github.io/Multimedia_Online/praktikum_4_1700016070.html">Praktikum 4 - Puzzle Project</a></li>
-			<li><a href="https://bangun1700016070.github.io/Multimedia_Online/praktikum_5_1700016070.html">Praktikum 5 - Motion Tween</a></li>
-		</ul>
-	</body>
+<head>
+    <title>Praktikum | MULON</title>
+    <link href='http://fonts.googleapis.com/css?family=Days+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <hgroup>
+            <h1>Praktikum Multimedia Online</h1>
+            <h2>Bangun Prakas Sujatmiko</h2>
+            <h2>1700016070</h2>
+        </hgroup>
+    </header>
+
+    <section class="demo">
+
+        <dl class="list maki">
+            <dt>Daftar Hasil Praktikum</dt>
+            <dd><a href="https://bangun1700016070.github.io/Multimedia_Online/praktikum_1_1700016070.html">Praktikum 1 - Canvas HTML</a></dd>
+            <dd><a href="https://bangun1700016070.github.io/Multimedia_Online/praktikum_2_1700016070.html">Praktikum 2 - Interaktivitas</a></dd>
+            <dd><a href="https://bangun1700016070.github.io/Multimedia_Online/praktikum_3_1700016070.html">Praktikum 3 - Vector Pattern</a></dd>
+            <dd><a href="https://bangun1700016070.github.io/Multimedia_Online/praktikum_4_1700016070.html">Praktikum 4 - Puzzle Project</a></dd>
+            <dd><a href="https://bangun1700016070.github.io/Multimedia_Online/praktikum_5_1700016070.html">Praktikum 5 - Motion Tween</a></dd>
+        </dl>
+
+        <a href="#" class="toggle">Gulung</a>
+
+    </section>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="assets/js/makisu.js"></script>
+    <script>
+
+        // The `enabled` flag will be `false` if CSS 3D isn't available
+
+        if ( $.fn.makisu.enabled ) {
+
+            var $maki = $( '.maki' );
+
+            // Create Makisus
+            $maki.makisu({
+                selector: 'dd',
+                overlap: 0.85,
+                speed: 1.7
+            });
+
+            // Open all
+            
+            $( '.list' ).makisu( 'open' );
+
+            // Toggle on click
+
+            $( '.toggle' ).on( 'click', function() {
+                $( '.list' ).makisu( 'toggle' );
+            });
+
+            // Disable all links
+
+            $( '.demo a' ).click( function( event ) {
+                event.preventDefault();
+            });
+
+        } else {
+
+            $( '.warning' ).show();
+        }
+
+    </script>
+</body>
 </html>
