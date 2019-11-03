@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +9,9 @@
 			height: 100%;
 		}
 		canvas {
-			background-image: url('assets/pic1.jpg');
+			background-image: url('pic1.jpg');
 			background-size: 1366px 663px;
+			background-repeat: no-repeat;
 		}
 		.text { 
 			position: absolute;
@@ -48,8 +50,9 @@
 
 		//membentuk objek salju
 		function salju() {
+			//menghapus jejak objek
 		    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+			
 		    for (var i = 0; i < objCount; i++) {
 		        var obj = objs[i],
 		            x = mX,
@@ -90,7 +93,7 @@
 		        if (obj.x >= canvas.width || obj.x <= 0) {
 		            reset(obj);
 		        }
-		        //menampilkan objek sal
+		        //menampilkan objek salju
 		        ctx.beginPath();
 		        ctx.arc(obj.x, obj.y, obj.size, 0, Math.PI * 2);
 		        ctx.fill();
@@ -99,7 +102,7 @@
 		    requestAnimationFrame(salju);
 		};
 
-		//fungsi untuk menambahkan objek salju berulang
+		//fungsi untuk mereset objek salju berulang
 		function reset(obj) {
 		    obj.x = Math.floor(Math.random() * canvas.width);
 		    obj.y = 0;
@@ -147,39 +150,6 @@
 		})
 
 		init();
-
-
-	  window.onload = function() {
-	    document.addEventListener("contextmenu", function(e){
-	      e.preventDefault();
-	    }, false);
-	    document.addEventListener("keydown", function(e) {
-	      if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
-	        disabledEvent(e);
-	      }
-	      if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
-	        disabledEvent(e);
-	      }
-	      if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
-	        disabledEvent(e);
-	      }
-	      if (e.ctrlKey && e.keyCode == 85) {
-	        disabledEvent(e);
-	      }
-	      if (event.keyCode == 123) {
-	        disabledEvent(e);
-	      }
-	    }, false);
-	    function disabledEvent(e){
-	      if (e.stopPropagation){
-	        e.stopPropagation();
-	      } else if (window.event){
-	        window.event.cancelBubble = true;
-	      }
-	      e.preventDefault();
-	      return false;
-	    }
-	  };
 	</script>
 </body>
 </html>
