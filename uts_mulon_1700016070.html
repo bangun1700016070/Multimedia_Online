@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UTS MulOn</title>
+	<style type="text/css">
+		body {
+			margin: 0;
+			height: 100%;
+		}
+		canvas {
+			background-image: url('pic1.jpg');
+			background-size: 1366px 663px;
+		}
+		.text { 
+			position: absolute;
+			top: 20%;
+			right: 50%;
+			-webkit-transform: translate(50%, -50%);
+			transform: translate(50%, -50%);
+			transform-style: initial;
+			color:floralwhite;
+			max-width: 100%;
+			padding: 2em 3em;
+			background: rgba(0, 0, 0, 0.4);
+			font-family: sans-serif;	
+		}
+	</style>
+</head>
+<body>
+	<div class="text" align="center">
+		<h1>Bangun Prakas Sujatmiko</h1>
+		<p>1700016070</p>
+		<p>Multimedia Online A</p>
+	</div>
+	<canvas id="canvas"></canvas>
+	<script>
+		//membuat halaman baru, mendeklarasikan obj bentuk array		
+		var objs = [],
+		    canvas = document.getElementById("canvas"),
+		    ctx = canvas.getContext("2d"),
+		    objCount = 450,
+		    mX = -100,
+		    mY = -100
+
+		    //ukuran canvas
+		    canvas.width = 1366;
+		    canvas.height = 663;
+
+		//membentuk objek salju
+		function salju() {
+		    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		    for (var i = 0; i < objCount; i++) {
+		        var obj = objs[i],
+		            x = mX,
+		            y = mY,
+		            minDist = 150,
+		            x2 = obj.x,
+		            y2 = obj.y;
+
+		        var dist = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y)),
+		            dx = x2 - x,
+		            dy = y2 - y;
+
+		        if (dist < minDist) {
+		            var force = minDist / (dist * dist),
+		                xcomp = (x - x2) / dist,
+		                ycomp = (y - y2) / dist,
+		                deltaV = force / 2;
+
+		            obj.velX -= deltaV * xcomp;
+		            obj.velY -= deltaV * ycomp;
+
+		        } else {
+		            obj.velX *= .98;
+		            if (obj.velY <= obj.speed) {
+		                obj.velY = obj.speed
+		            }
+		            obj.velX += Math.cos(obj.step += .05) * obj.stepSize;
+		        }
+		        //warna objek salju
+		        ctx.fillStyle = "rgba(255,255,255," + obj.opacity + ")";
+		        obj.y += obj.velY;
+		        obj.x += obj.velX;
+		        //memanggil fungsi reset berfungsi untuk menambah objek salju berulang    
+		        if (obj.y >= canvas.height || obj.y <= 0) {
+		            reset(obj);
+		        }
+
+		        if (obj.x >= canvas.width || obj.x <= 0) {
+		            reset(obj);
+		        }
+		        //menampilkan objek sal
+		        ctx.beginPath();
+		        ctx.arc(obj.x, obj.y, obj.size, 0, Math.PI * 2);
+		        ctx.fill();
+		    }
+		    //menjalankan animasi frame dengan argumen fungsi salju
+		    requestAnimationFrame(salju);
+		};
+
+		//fungsi untuk menambahkan objek salju berulang
+		function reset(obj) {
+		    obj.x = Math.floor(Math.random() * canvas.width);
+		    obj.y = 0;
+		    obj.size = (Math.random() * 3) + 2;
+		    obj.speed = (Math.random() * 1) + 0.5;
+		    obj.velY = obj.speed;
+		    obj.velX = 0;
+		    obj.opacity = (Math.random() * 0.5) + 0.3;
+		}
+
+		function init() {
+		    for (var i = 0; i < objCount; i++) {
+		        var x = Math.floor(Math.random() * canvas.width),
+		            y = Math.floor(Math.random() * canvas.height),
+		            size = (Math.random() * 3) + 2,
+		            speed = (Math.random() * 1) + 0.5,
+		            opacity = (Math.random() * 0.5) + 0.3;
+
+		        objs.push({
+		            speed: speed,
+		            velY: speed,
+		            velX: 0,
+		            x: x,
+		            y: y,
+		            size: size,
+		            stepSize: (Math.random()) / 30,
+		            step: 0,
+		            opacity: opacity
+		        });
+		    }
+		    //menjalankan fungsi salju menghasilkan objek
+		    salju();
+		};
+
+		//interkasi mousemove ketika cursor mendekati objek maka objek akan menjauh
+		canvas.addEventListener("mousemove", function(e) {
+		    mX = e.clientX,
+		    mY = e.clientY
+		});
+
+		canvas.addEventListener("keydown", function(e) {
+		    if(e.keyCode=='40')
+		    mX = e.objX += obj.speed,
+		    mY = e.objY += obj.speed
+		});
+		      
+
+		//ketika layar windows diperkecil maka canvas akan responsive
+		window.addEventListener("resize",function(){
+		    canvas.width = window.innerWidth;
+		    canvas.height = window.innerHeight;
+		})
+
+		init();
+
+
+	  window.onload = function() {
+	    document.addEventListener("contextmenu", function(e){
+	      e.preventDefault();
+	    }, false);
+	    document.addEventListener("keydown", function(e) {
+	      if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+	        disabledEvent(e);
+	      }
+	      if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+	        disabledEvent(e);
+	      }
+	      if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+	        disabledEvent(e);
+	      }
+	      if (e.ctrlKey && e.keyCode == 85) {
+	        disabledEvent(e);
+	      }
+	      if (event.keyCode == 123) {
+	        disabledEvent(e);
+	      }
+	    }, false);
+	    function disabledEvent(e){
+	      if (e.stopPropagation){
+	        e.stopPropagation();
+	      } else if (window.event){
+	        window.event.cancelBubble = true;
+	      }
+	      e.preventDefault();
+	      return false;
+	    }
+	  };
+	</script>
+</body>
+</html>
