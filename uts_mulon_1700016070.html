@@ -43,8 +43,8 @@
 		    mY = -100
 
 		    //ukuran canvas
-		    canvas.width = 1366;
-		    canvas.height = 663;
+		    canvas.width = window.innerWidth;
+		    canvas.height = window.innerHeight;
 
 		//membentuk objek salju
 		function salju() {
@@ -139,13 +139,6 @@
 		    mX = e.clientX,
 		    mY = e.clientY
 		});
-
-		canvas.addEventListener("keydown", function(e) {
-		    if(e.keyCode=='40')
-		    mX = e.objX += obj.speed,
-		    mY = e.objY += obj.speed
-		});
-		      
 
 		//ketika layar windows diperkecil maka canvas akan responsive
 		window.addEventListener("resize",function(){
