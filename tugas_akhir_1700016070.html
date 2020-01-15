@@ -1,0 +1,123 @@
+<html>
+<head>
+    <title>Tugas Akhir - Pecahkan Balon</title>
+    <style type="text/css">
+        canvas{
+            background-image: url('assets/bg1.jpg');
+            background-size: 1366px 663px;
+            background-repeat: no-repeat;
+        }
+        .text { 
+            position: absolute;
+            top: 20%;
+            right: 50%;
+            -webkit-transform: translate(50%, -50%);
+            transform: translate(50%, -50%);
+            transform-style: initial;
+            color:floralwhite;
+            max-width: 100%;
+            padding: 2em 3em;
+            background: rgba(0, 0, 0, 0.4);
+            font-family: sans-serif;    
+        }
+    </style>
+    <script type="text/javascript">
+        var can, ctx,
+            canX = [], canY = [], bubble = [],
+            mouseIsDown = 0, len = 0;
+ 
+        function init() {
+            can = document.getElementById("can");
+            ctx = can.getContext("2d");
+ 
+            can.addEventListener("mousedown", mouseDown, false);
+            can.addEventListener("mousemove", mouseXY, false);
+            can.addEventListener("touchstart", touchDown, false);
+            can.addEventListener("touchend", touchUp, false);
+            can.addEventListener("touchmove", touchXY, false);
+ 
+            document.body.addEventListener("mouseup", mouseUp, false);
+            document.body.addEventListener("touchcancel", touchUp, false);
+            for (i = 0; i < 40; i++) {
+                bubble[i] = 0;
+            }
+            animate();
+        }
+ 
+        function mouseUp() {
+            mouseIsDown = 0;
+            mouseXY();
+        }
+ 
+        function mouseDown() {
+            mouseIsDown = 1;
+            mouseXY();
+        }
+ 
+        function touchDown() {
+            mouseIsDown = 1;
+            touchXY();
+        }
+ 
+        function touchUp(e) {
+            if (!e)
+                e = event;
+            len = e.targetTouches.length;
+        }
+ 
+        function mouseXY(e) {
+            if (!e)
+                e = event;
+            canX[0] = e.pageX - can.offsetLeft;
+            canY[0] = e.pageY - can.offsetTop;
+            len = 1;
+        }
+ 
+        function touchXY(e) {
+            if (!e)
+                e = event;
+            e.preventDefault();
+            len = e.targetTouches.length;
+            for (i = 0; i < len; i++) {
+                canX[i] = e.targetTouches[i].pageX - can.offsetLeft;
+                canY[i] = e.targetTouches[i].pageY - can.offsetTop;
+            }
+        }
+
+        function animate() {
+            ctx.strokeStyle = "blue";
+            ctx.clearRect(0,0, can.width, can.height);
+            // jalur gelembung
+            for (i = 0; i < 40; i++) {
+                bubble[i]++;
+                if (bubble[i] >= can.height + 100)
+                    bubble[i] = -10;
+                var y = bubble[i];
+                var x = (i + 1) * 50;
+                var radius = 25;
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, 2 * Math.PI);
+                ctx.closePath();
+                // uji setiap sentuhan yang masih ada untuk melihat apakah itu ada di gelembung
+                for (j = 0;j < len; j++) {
+                    if (ctx.isPointInPath(canX[j], canY[j]) && mouseIsDown)
+                        bubble[i] = -30;
+                }
+                ctx.stroke();
+            }
+            setTimeout(animate, 10);
+        }
+    </script>
+</head>
+<body onload="init()">
+    <canvas id="can" height="663" width="1366" style="background-color:black"></canvas>
+    <audio src="assets/audio/rainy.mp3" autoplay="autoplay"></audio>
+    <div class="text" align="center">
+        <h1>Bangun Prakas Sujatmiko</h1>
+        <p>1700016070</p>
+        <p>Multimedia Online A</p>
+        <p>Pecahkan balon di luar text box ini !</p>
+        <p>Ups audionya nunggu ya, download dulu gengs :)</p>
+    </div>
+</body>
+</html>
